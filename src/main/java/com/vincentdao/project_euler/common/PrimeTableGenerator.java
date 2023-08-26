@@ -1,6 +1,5 @@
 package com.vincentdao.project_euler.common;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
