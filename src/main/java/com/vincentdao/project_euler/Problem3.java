@@ -9,10 +9,10 @@ public class Problem3 {
     private static final int PRIME_SIZE = 10000;
 
     public static void main(String[] args) {
-        List<Integer> primes = PrimeTableGenerator.generateWithSieveOfEratosthenes(PRIME_SIZE);
+        List<Long> primes = PrimeTableGenerator.generateWithSieveOfEratosthenes(PRIME_SIZE);
         long givenNum = 600851475143L;
         long result = 0;
-        for (Integer i : primes) {
+        for (long i : primes) {
             if (givenNum == 1) {
                 System.out.println(result);
                 return;
