@@ -15,19 +15,13 @@ public class Problem27 {
         int resultA = 0;
         int resultB = 0;
         for (int a = -(MAX_A - 1); a < MAX_A; a++) {
-            for (int b = -MAX_B; b <= MAX_B; b++) {
-                int largerNum = Math.max(a, b);
-                int smallerNum = Math.min(a, b);
-                boolean allCoefficientsAreRelativelyPrime = true;
-                for (int i = 2; i <= smallerNum; i++) {
-                    if (largerNum % i == 0) {
-                        allCoefficientsAreRelativelyPrime = false;
-                        break;
-                    }
-                }
+            for (int b = 2; b <= MAX_B; b++) {
+                boolean allCoefficientsAreRelativelyPrime = isAllCoefficientsAreRelativelyPrime(a, b);
                 // a and b are not relatively prime => exclude
-                // a and b are all even => results are always even => exclude
-                if (!allCoefficientsAreRelativelyPrime || ((1 + a) % 2 == 0 && b % 2 == 0)) {
+                // a + 1 (in which 1 is the coefficient of the degree of 2) and b are all even
+                // => results are always even => exclude? since 2 is prime too
+                // ((a + 1) % 2 == 0 && b % 2 == 0)
+                if (!allCoefficientsAreRelativelyPrime) {
                     continue;
                 }
 
@@ -35,8 +29,8 @@ public class Problem27 {
                 int count = 0;
                 for (int n = 0; true; n++) {
                     int pn = n * n + a * n + b;
+                    boolean isPrime = pn >= 2;
                     // check for prime
-                    boolean isPrime = true;
                     for (int i = 2; i <= Math.sqrt(pn); i++) {
                         if (pn % i == 0) {
                             isPrime = false;
@@ -55,6 +49,21 @@ public class Problem27 {
                 }
             }
         }
+        System.out.println(largestCount);
         System.out.println(resultA * resultB);
+    }
+
+    private static boolean isAllCoefficientsAreRelativelyPrime(int a, int b) {
+        int largerNum = Math.abs(Math.max(a, b));
+        int smallerNum = Math.abs(Math.min(a, b));
+        if (smallerNum == 0 || smallerNum == 1) {
+            return true;
+        }
+        for (int i = 2; i <= Math.sqrt(smallerNum); i++) {
+            if (largerNum % i == 0 && smallerNum % i == 0) {
+                return false;
+            }
+        }
+        return largerNum % smallerNum != 0;
     }
 }
